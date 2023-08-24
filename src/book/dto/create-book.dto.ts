@@ -5,6 +5,10 @@ import { User } from "../../auth/schemas/user.schema";
 
 export class CreateBookDto {
 
+
+    @IsString()
+    readonly image: string;
+
     @IsNotEmpty()
     @IsString()
     readonly title: string;

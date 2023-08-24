@@ -3,6 +3,10 @@ import { Category } from "../schemas/book.schema";
 
 
 export class UpdateBookDto {
+
+    @IsString()
+    readonly image: string;
+    
     @IsNotEmpty()
     @IsString()
     readonly title: string;

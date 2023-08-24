@@ -19,6 +19,9 @@ export enum Category{
 export class Book{
 
     @Prop()
+    image: string;
+
+    @Prop()
     title: string;
 
     @Prop()

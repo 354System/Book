@@ -13,6 +13,7 @@ export class AuthController {
     constructor (private authService: AuthService){}
 
     // @HttpCode(Httpstatus.OK)
+    
     @Get('/user')
     async getAllBooks(@Query()  query: ExpressQuery,@Param('id') id: string): Promise<User[]> {
         return this.authService.findAll(query)
