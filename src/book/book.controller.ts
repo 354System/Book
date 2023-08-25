@@ -19,7 +19,6 @@ export class BookController {
     @UseGuards(AuthGuard())
     async createBook(
         @Body()
-        
         book: CreateBookDto
     ): Promise<Book>{
         const findbook = await this.bookService.findByTitle(book.title)

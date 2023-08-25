@@ -10,6 +10,7 @@ import * as bcrypt from 'bcryptjs'
 import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -33,6 +34,14 @@ export class AuthService {
 
         const users = await this.userModel.find({...keyword});
         return users;
+    }
+
+
+    async updateById (id: string,updateUserDto: UpdateUserDto): Promise<User> {
+        return await this.userModel.findByIdAndUpdate(id, updateUserDto,{
+            new: true,
+            runValidator: true,
+        });
     }
 
 
