@@ -20,7 +20,7 @@ export class BookService {
             }
         } : {};
 
-        const books = await this.bookModel.find({...keyword});
+        const books = await this.bookModel.find({ ...keyword });
         return books;
     }
 
@@ -30,12 +30,12 @@ export class BookService {
 
     }
 
-    async findByTitle(title: string): Promise<Book>{
-        return await this.bookModel.findOne({title});;
+    async findByTitle(title: string): Promise<Book> {
+        return await this.bookModel.findOne({ title });;
     }
 
     async findById(id: string): Promise<Book> {
-        const isValidId =Mongoose.isValidObjectId(id)
+        const isValidId = Mongoose.isValidObjectId(id)
         if (!isValidId) {
             throw new BadRequestException('id incorrect');
         }

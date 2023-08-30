@@ -28,6 +28,9 @@ export class JwtStrategy extends PassportStrategy(Strategy){
         if(!user) {
             throw new UnauthorizedException('login first to access this endpoint.')
         }
+        if (user.role !=='Admin') {
+            throw new UnauthorizedException('Anda tidak memiliki akses')
+    }
         return user;
     }
 }

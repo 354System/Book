@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 // import { UserService } from 'src/user/user.service';
 // import { User } from 'src/users/users.service';
@@ -11,6 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
 
 @Injectable()
 export class AuthService {
@@ -42,6 +43,15 @@ export class AuthService {
             new: true,
             runValidator: true,
         });
+    
+    }
+
+    async updateRole (id: string,updateRoleDto: UpdateRoleDto): Promise<User> {
+        const existingUser = await this.userModel.findByIdAndUpdate(id, updateRoleDto, {new:true});
+        if(!existingUser){
+            throw new NotFoundException(`User ${id} tidak tersedia`);
+        }
+        return existingUser;
     }
 
 
@@ -55,6 +65,7 @@ export class AuthService {
             name,
             email,
             password: hashedPassword,
+            role:'Public',
         })
         
         const token = this.jwtService.sign({ id: user._id })

@@ -4,10 +4,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BookModule } from './book/book.module';
+import { ClothesModule } from './clothes/clothes.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './user/roles.guard';
+import { RolesGuard } from './users/roles.guard';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { RolesGuard } from './user/roles.guard';
     }),
     MongooseModule.forRoot(process.env.DB_URI),
   BookModule,
+  ClothesModule,
   AuthModule,
   UsersModule,
   ],

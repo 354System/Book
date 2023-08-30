@@ -11,6 +11,7 @@ export enum Category{
     ACTION = 'Action',
     CRIMINAL = 'Criminal',
     FRIENDSHIP = 'Friendship',
+    HISTORY = 'History',
 }
 
 

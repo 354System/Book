@@ -20,8 +20,10 @@ export class User {
     
     @Prop()
     password: string;
+    static role: string;
 
-    // roles: Role[];
+    @Prop()
+    role: string;
 
 }
 
