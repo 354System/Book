@@ -20,7 +20,6 @@ export class User {
     
     @Prop()
     password: string;
-    static role: string;
 
     @Prop()
     role: string;

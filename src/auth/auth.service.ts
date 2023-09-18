@@ -38,13 +38,25 @@ export class AuthService {
     }
 
 
-    async updateById (id: string,updateUserDto: UpdateUserDto): Promise<User> {
-        return await this.userModel.findByIdAndUpdate(id, updateUserDto,{
-            new: true,
-            runValidator: true,
-        });
+    // async updateById (id: string,updateUserDto: UpdateUserDto): Promise<User> {
+    //     return await this.userModel.findByIdAndUpdate(id, updateUserDto,{
+    //         new: true,
+    //         runValidator: true,
+    //     });
     
-    }
+    // }
+    async updateById(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+        // Check if updateUserDto contains a new password
+        if (updateUserDto.password) {
+          // Hash the new password before saving it
+          updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10); // You can adjust the salt rounds (10) as needed
+        }
+      
+        return await this.userModel.findByIdAndUpdate(id, updateUserDto, {
+          new: true,
+          runValidator: true,
+        });
+      }
 
     async updateRole (id: string,updateRoleDto: UpdateRoleDto): Promise<User> {
         const existingUser = await this.userModel.findByIdAndUpdate(id, updateRoleDto, {new:true});
@@ -87,9 +99,17 @@ export class AuthService {
         if(!isPasswordMatched) {
             throw new UnauthorizedException('Invalid Email or Password')
         }
-
         const token = this.jwtService.sign({ id: user._id })
+        const role = user.role
+        const username = user.name
+        const userEmail = user.email
+        const data = {
+            token: token,
+            role: role,
+            username: username,
+            userEmail: userEmail
+        }
         
-        return { token };
+        return data ;
     }
 }
